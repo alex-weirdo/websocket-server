@@ -3,6 +3,8 @@
 namespace BeyondCode\LaravelWebSockets\WebSockets\Messages;
 
 use BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Ratchet\ConnectionInterface;
 use stdClass;
@@ -43,6 +45,43 @@ class PusherChannelProtocolMessage implements PusherMessage
     {
         $connection->send(json_encode([
             'event' => 'pusher:pong',
+        ]));
+    }
+
+    /*
+     * аутентификация и получение токена
+     */
+    protected function login(ConnectionInterface $connection, stdClass $payload)
+    {
+        $remember = null;
+        $credentials = ['email' => $payload->email, 'password' => $payload->password];
+
+        if (!Auth::attempt($credentials)) {
+            $data = [
+                'result' => 'error',
+                'status' => 401,
+                'message' => 'You cannot sign with those credentials',
+                'errors' => 'Unauthorised',
+            ];
+        } else {
+            $token = Auth::user()->createToken(config('app.name'));
+            $token->token->expires_at = $remember ?
+                Carbon::now()->addMonth() :
+                Carbon::now()->addDay();
+
+            $token->token->save();
+
+            $data = [
+                'result' => 'ok',
+                'status' => 200,
+                'token_type' => 'Bearer',
+                'token' => $token->accessToken,
+                'expires_at' => Carbon::parse($token->token->expires_at)->toDateTimeString()
+            ];
+        }
+
+        $connection->send(json_encode([
+            'data' => $data,
         ]));
     }
 
