@@ -1,17 +1,17 @@
 {
-    "name": "beyondcode/laravel-websockets",
+    "name": "alex-weirdo/laravel-websockets",
     "description": "An easy to use WebSocket server",
     "keywords": [
-        "beyondcode",
+        "alex-weirdo",
         "laravel-websockets"
     ],
-    "homepage": "https://github.com/beyondcode/laravel-websockets",
+    "homepage": "https://github.com/alex-weirdo/laravel-websockets",
     "license": "MIT",
     "authors": [
         {
             "name": "Marcel Pociot",
             "email": "marcel@beyondco.de",
-            "homepage": "https://beyondcode.de",
+            "homepage": "https://beyondco.de",
             "role": "Developer"
         },
         {
@@ -45,12 +45,12 @@
     },
     "autoload": {
         "psr-4": {
-            "BeyondCode\\LaravelWebSockets\\": "src"
+            "alex-weirdo\\LaravelWebSockets\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BeyondCode\\LaravelWebSockets\\Tests\\": "tests"
+            "alex-weirdo\\LaravelWebSockets\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -64,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "BeyondCode\\LaravelWebSockets\\WebSocketsServiceProvider"
+                "alex-weirdo\\LaravelWebSockets\\WebSocketsServiceProvider"
             ],
             "aliases": {
-                "WebSocketRouter": "BeyondCode\\LaravelWebSockets\\Facades\\WebSocketRouter"
+                "WebSocketRouter": "alex-weirdo\\LaravelWebSockets\\Facades\\WebSocketRouter"
             }
         }
     }
